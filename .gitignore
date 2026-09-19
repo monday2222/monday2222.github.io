@@ -1,0 +1,7 @@
+.DS_Store
+*.mp4
+*.mov
+*.zip
+*.psd
+*.ai
+node_modules/

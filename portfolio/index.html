@@ -1,0 +1,3917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Delaney Huaqiu Chen — Product Manager / UIUX Designer</title>
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+:root{
+    --bg:#08080b;
+    --bg-soft:#0d0b12;
+    --surface:rgba(255,255,255,.045);
+    --surface-strong:rgba(255,255,255,.075);
+    --border:rgba(255,255,255,.10);
+
+    --text:#f5f3f8;
+    --muted:#a5a0ad;
+    --muted2:#77717e;
+
+    /* Reference-file inspired: white → violet → soft pink */
+    --purple:#8f70ff;
+    --purple-light:#b99dff;
+    --pink:#e99acb;
+    --pink-light:#f3b8dc;
+
+    --gradient:
+        linear-gradient(
+            120deg,
+            #ffffff 0%,
+            #c9baff 38%,
+            #c98ed8 68%,
+            #f1a7d4 100%
+        );
+
+    --ease:cubic-bezier(.22,1,.36,1);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:
+        radial-gradient(circle at 80% -10%,rgba(125,90,220,.10),transparent 35%),
+        radial-gradient(circle at 0% 70%,rgba(220,130,195,.06),transparent 32%),
+        var(--bg);
+
+    color:var(--text);
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Display",
+        "SF Pro Text",
+        Inter,
+        Arial,
+        sans-serif;
+
+    overflow-x:hidden;
+    cursor:none;
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+button{
+    font:inherit;
+}
+
+::selection{
+    background:rgba(180,130,255,.35);
+}
+
+
+/* =========================================================
+   LANGUAGE SYSTEM
+========================================================= */
+
+.lang-cn{
+    display:block;
+}
+
+.lang-en{
+    display:block;
+}
+
+body.en-mode .lang-cn{
+    display:none!important;
+}
+
+
+/* =========================================================
+   CUSTOM CURSOR
+========================================================= */
+
+.cursor{
+    position:fixed;
+
+    width:12px;
+    height:12px;
+
+    left:0;
+    top:0;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    pointer-events:none;
+
+    z-index:999999;
+
+    mix-blend-mode:difference;
+
+    transform:translate(-50%,-50%);
+
+    transition:
+        width .25s var(--ease),
+        height .25s var(--ease),
+        opacity .25s ease;
+}
+
+.cursor-ring{
+    position:fixed;
+
+    width:42px;
+    height:42px;
+
+    left:0;
+    top:0;
+
+    border-radius:50%;
+
+    border:
+        1px solid
+        rgba(205,180,255,.7);
+
+    pointer-events:none;
+
+    z-index:999998;
+
+    transform:translate(-50%,-50%);
+
+    transition:
+        width .3s var(--ease),
+        height .3s var(--ease),
+        border-color .3s ease,
+        opacity .3s ease;
+}
+
+body.hovering .cursor{
+    width:7px;
+    height:7px;
+}
+
+body.hovering .cursor-ring{
+    width:64px;
+    height:64px;
+
+    border-color:
+        rgba(239,170,214,.9);
+}
+
+.cursor.clicking{
+    width:5px;
+    height:5px;
+}
+
+.cursor-ring.clicking{
+    width:86px;
+    height:86px;
+
+    border-color:#fff;
+
+    opacity:.4;
+}
+
+
+/* =========================================================
+   CLICK RIPPLE
+========================================================= */
+
+.cursor-ripple{
+    position:fixed;
+
+    width:8px;
+    height:8px;
+
+    border-radius:50%;
+
+    border:
+        1px solid
+        rgba(215,175,255,.8);
+
+    pointer-events:none;
+
+    z-index:999997;
+
+    transform:translate(-50%,-50%);
+
+    animation:ripple .65s ease-out forwards;
+}
+
+@keyframes ripple{
+    from{
+        width:10px;
+        height:10px;
+        opacity:.9;
+    }
+
+    to{
+        width:90px;
+        height:90px;
+        opacity:0;
+    }
+}
+
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+.background{
+    position:fixed;
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:-5;
+
+    overflow:hidden;
+}
+
+.background::before{
+    content:"";
+
+    position:absolute;
+
+    width:850px;
+    height:850px;
+
+    left:-380px;
+    top:5%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(119,83,255,.13),
+            transparent 68%
+        );
+
+    filter:blur(70px);
+}
+
+.background::after{
+    content:"";
+
+    position:absolute;
+
+    width:700px;
+    height:700px;
+
+    right:-300px;
+    bottom:8%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(220,130,195,.09),
+            transparent 68%
+        );
+
+    filter:blur(80px);
+}
+
+.noise{
+    position:fixed;
+    inset:0;
+
+    pointer-events:none;
+
+    opacity:.035;
+
+    z-index:999;
+
+    background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='.45'/%3E%3C/svg%3E");
+}
+
+
+/* =========================================================
+   LOADER
+========================================================= */
+
+.loader{
+    position:fixed;
+    inset:0;
+
+    z-index:99999;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #16131e,
+            #070709 70%
+        );
+
+    transition:
+        opacity 1s var(--ease),
+        visibility 1s ease;
+}
+
+.loader.hidden{
+    opacity:0;
+    visibility:hidden;
+}
+
+.loader-inner{
+    width:min(600px,85vw);
+    text-align:center;
+}
+
+.loader-title{
+    font-size:
+        clamp(22px,3vw,42px);
+
+    font-weight:600;
+
+    letter-spacing:-.04em;
+
+    line-height:1.25;
+
+    background:
+        linear-gradient(
+            100deg,
+            #fff,
+            #b59cff,
+            #efb0d7,
+            #fff
+        );
+
+    background-size:200%;
+
+    -webkit-background-clip:text;
+    color:transparent;
+
+    animation:
+        loaderGradient
+        4s linear infinite;
+}
+
+.loader-cn{
+    margin-top:16px;
+
+    color:
+        rgba(255,255,255,.55);
+
+    font-size:
+        clamp(13px,1.4vw,17px);
+
+    letter-spacing:.04em;
+}
+
+.loader-name{
+    margin-top:35px;
+
+    color:
+        rgba(255,255,255,.78);
+
+    font-size:12px;
+
+    letter-spacing:.13em;
+}
+
+
+/* ECG progress */
+
+.ecg-wrap{
+    position:relative;
+
+    width:260px;
+    height:48px;
+
+    margin:35px auto 0;
+}
+
+.ecg{
+    width:100%;
+    height:100%;
+}
+
+.ecg-bg{
+    fill:none;
+
+    stroke:
+        rgba(255,255,255,.08);
+
+    stroke-width:1.5;
+}
+
+.ecg-line{
+    fill:none;
+
+    stroke:url(#ecgGradient);
+
+    stroke-width:2.2;
+
+    stroke-linecap:round;
+    stroke-linejoin:round;
+
+    stroke-dasharray:600;
+    stroke-dashoffset:600;
+
+    animation:
+        ecgLoad
+        2.4s var(--ease) forwards;
+}
+
+.loader-percent{
+    margin-top:12px;
+
+    font-size:10px;
+
+    letter-spacing:.18em;
+
+    color:
+        rgba(255,255,255,.45);
+}
+
+@keyframes ecgLoad{
+    to{
+        stroke-dashoffset:0;
+    }
+}
+
+@keyframes loaderGradient{
+    from{
+        background-position:0%;
+    }
+
+    to{
+        background-position:200%;
+    }
+}
+
+
+/* =========================================================
+   NAV
+========================================================= */
+
+nav{
+    position:fixed;
+
+    top:20px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:
+        min(
+            calc(100% - 40px),
+            1240px
+        );
+
+    height:64px;
+
+    padding:0 22px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    border:
+        1px solid
+        rgba(255,255,255,.10);
+
+    border-radius:22px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.09),
+            rgba(255,255,255,.025)
+        );
+
+    backdrop-filter:
+        blur(28px)
+        saturate(150%);
+
+    -webkit-backdrop-filter:
+        blur(28px)
+        saturate(150%);
+
+    box-shadow:
+        0 20px 80px
+        rgba(0,0,0,.35);
+
+    z-index:1000;
+
+    transition:
+        transform .6s var(--ease);
+}
+
+nav.hide{
+    transform:
+        translate(-50%,-150%);
+}
+
+.nav-logo{
+    font-size:13px;
+
+    font-weight:600;
+
+    letter-spacing:.09em;
+}
+
+.nav-logo span{
+    color:var(--purple-light);
+}
+
+.nav-links{
+    display:flex;
+    gap:28px;
+}
+
+.nav-links a{
+    font-size:12px;
+
+    color:
+        rgba(255,255,255,.58);
+
+    transition:.3s ease;
+}
+
+.nav-links a:hover{
+    color:#fff;
+}
+
+.language-switch{
+    display:flex;
+
+    padding:4px;
+
+    gap:3px;
+
+    border-radius:12px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    background:
+        rgba(255,255,255,.03);
+}
+
+.language-switch button{
+    border:0;
+
+    padding:
+        7px 10px;
+
+    border-radius:8px;
+
+    background:transparent;
+
+    color:
+        rgba(255,255,255,.5);
+
+    font-size:11px;
+
+    cursor:none;
+
+    transition:.3s;
+}
+
+.language-switch button.active{
+    color:#fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(142,103,255,.42),
+            rgba(225,135,195,.28)
+        );
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+    position:relative;
+
+    min-height:100vh;
+
+    display:flex;
+    align-items:center;
+
+    padding:
+        130px
+        max(24px,7vw)
+        80px;
+
+    overflow:hidden;
+}
+
+#particleCanvas{
+    position:absolute;
+    inset:0;
+
+    width:100%;
+    height:100%;
+
+    pointer-events:none;
+
+    opacity:.72;
+}
+
+.hero-content{
+    position:relative;
+
+    width:100%;
+    max-width:1400px;
+
+    margin:auto;
+
+    z-index:2;
+
+    transform-style:preserve-3d;
+
+    transition:
+        transform .18s var(--ease);
+}
+
+.hero-tag{
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:
+        13px 22px;
+
+    border-radius:100px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.13);
+
+    background:
+        rgba(255,255,255,.035);
+
+    backdrop-filter:blur(15px);
+
+    color:
+        rgba(255,255,255,.62);
+
+    font-size:12px;
+
+    letter-spacing:.08em;
+
+    margin-bottom:52px;
+}
+
+.hero-dot{
+    width:8px;
+    height:8px;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--purple),
+            var(--pink)
+        );
+
+    box-shadow:
+        0 0 18px
+        rgba(190,130,255,.9);
+}
+
+
+/* =========================================================
+   HERO SLOGAN — BIGGEST
+========================================================= */
+
+.hero-slogan{
+    max-width:1380px;
+
+    font-size:
+        clamp(
+            3.6rem,
+            8.5vw,
+            9.2rem
+        );
+
+    line-height:.91;
+
+    font-weight:650;
+
+    letter-spacing:-.075em;
+
+    transform-style:preserve-3d;
+
+    text-wrap:balance;
+}
+
+.hero-slogan .gradient{
+    background:var(--gradient);
+
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.hero-slogan-cn{
+    margin-top:20px;
+
+    max-width:1150px;
+
+    font-size:
+        clamp(
+            1.5rem,
+            3vw,
+            3.4rem
+        );
+
+    line-height:1.22;
+
+    letter-spacing:-.04em;
+
+    color:
+        rgba(240,237,246,.86);
+}
+
+
+/* NAME BELOW SLOGAN */
+
+.hero-person{
+    margin-top:50px;
+
+    padding-top:28px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.12);
+
+    max-width:800px;
+}
+
+.hero-name{
+    font-size:
+        clamp(1.25rem,2vw,1.8rem);
+
+    font-weight:500;
+
+    color:#f0edf4;
+}
+
+.hero-role{
+    margin-top:10px;
+
+    font-size:
+        clamp(.8rem,1.2vw,1rem);
+
+    letter-spacing:.04em;
+
+    color:
+        rgba(255,255,255,.48);
+}
+
+.hero-actions{
+    display:flex;
+
+    align-items:center;
+
+    gap:30px;
+
+    margin-top:48px;
+}
+
+.primary-btn{
+    display:inline-flex;
+
+    align-items:center;
+    gap:10px;
+
+    padding:
+        17px 27px;
+
+    border-radius:100px;
+
+    background:
+        linear-gradient(
+            110deg,
+            #8b68ed,
+            #bd7cdb,
+            #ec82bb
+        );
+
+    box-shadow:
+        0 15px 50px
+        rgba(175,95,190,.25);
+
+    color:#fff;
+
+    font-weight:600;
+
+    transition:
+        transform .35s var(--ease),
+        box-shadow .35s;
+}
+
+.primary-btn:hover{
+    transform:
+        translateY(-4px)
+        scale(1.025);
+
+    box-shadow:
+        0 25px 70px
+        rgba(200,100,190,.4);
+}
+
+.secondary-btn{
+    color:
+        rgba(255,255,255,.55);
+
+    font-size:14px;
+
+    transition:.3s;
+}
+
+.secondary-btn:hover{
+    color:#fff;
+}
+
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+section:not(.hero){
+    padding:
+        145px
+        max(24px,7vw);
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.08);
+}
+
+.container{
+    max-width:1280px;
+    margin:auto;
+}
+
+.kicker{
+    color:
+        rgba(255,255,255,.42);
+
+    font-size:11px;
+
+    letter-spacing:.18em;
+
+    margin-bottom:26px;
+}
+
+.section-title{
+    font-size:
+        clamp(
+            2.7rem,
+            5vw,
+            5.2rem
+        );
+
+    letter-spacing:-.055em;
+
+    line-height:1.02;
+
+    margin-bottom:70px;
+}
+
+
+/* =========================================================
+   REVEAL
+========================================================= */
+
+.reveal{
+    opacity:0;
+
+    transform:
+        translateY(35px);
+
+    transition:
+        opacity .9s var(--ease),
+        transform .9s var(--ease);
+}
+
+.reveal.visible{
+    opacity:1;
+    transform:translateY(0);
+}
+
+
+/* =========================================================
+   ABOUT
+========================================================= */
+
+.about-text{
+    max-width:1100px;
+}
+
+.about-text p{
+    font-size:
+        clamp(
+            1.25rem,
+            2vw,
+            1.9rem
+        );
+
+    line-height:1.65;
+
+    color:
+        rgba(255,255,255,.73);
+
+    margin-bottom:28px;
+}
+
+.about-text .lang-cn{
+    color:
+        rgba(255,255,255,.55);
+}
+
+
+/* =========================================================
+   PROJECTS
+========================================================= */
+
+.project-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,minmax(0,1fr));
+
+    gap:22px;
+}
+
+.project-card{
+    position:relative;
+
+    min-height:440px;
+
+    border-radius:25px;
+
+    overflow:hidden;
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    background:
+        rgba(255,255,255,.035);
+
+    cursor:none;
+
+    transform-style:preserve-3d;
+
+    transition:
+        transform .35s var(--ease),
+        border-color .35s,
+        box-shadow .35s;
+}
+
+
+/* Mouse glow */
+
+.project-card::before{
+    content:"";
+
+    position:absolute;
+    inset:0;
+
+    z-index:3;
+
+    pointer-events:none;
+
+    background:
+        radial-gradient(
+            380px circle
+            at
+            var(--mouse-x,50%)
+            var(--mouse-y,50%),
+
+            rgba(175,120,255,.18),
+            rgba(232,130,195,.08) 30%,
+            transparent 65%
+        );
+
+    opacity:0;
+
+    transition:opacity .35s;
+}
+
+.project-card:hover::before{
+    opacity:1;
+}
+
+.project-card:hover{
+    border-color:
+        rgba(200,150,255,.42);
+
+    box-shadow:
+        0 35px 100px
+        rgba(105,55,145,.22);
+}
+
+.project-image{
+    position:absolute;
+    inset:-15px;
+
+    background-size:cover;
+    background-position:center;
+
+    transition:
+        transform 1.1s var(--ease);
+}
+
+.project-card:hover .project-image{
+    transform:
+        scale(1.08)
+        translateZ(30px);
+}
+
+.project-overlay{
+    position:absolute;
+    inset:0;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(8,8,11,.02),
+            rgba(8,8,11,.9)
+        );
+}
+
+.project-content{
+    position:absolute;
+
+    left:30px;
+    right:30px;
+    bottom:30px;
+
+    z-index:5;
+
+    transform:translateZ(30px);
+}
+
+.project-number{
+    font-size:10px;
+
+    letter-spacing:.15em;
+
+    color:
+        rgba(210,170,255,.85);
+
+    margin-bottom:14px;
+}
+
+.project-title{
+    font-size:
+        clamp(1.7rem,2.6vw,2.5rem);
+
+    letter-spacing:-.04em;
+
+    margin-bottom:12px;
+}
+
+.project-desc{
+    max-width:480px;
+
+    color:
+        rgba(255,255,255,.58);
+
+    font-size:14px;
+
+    line-height:1.6;
+}
+
+
+/* =========================================================
+   SKILLS
+========================================================= */
+
+.skills-scroll{
+    display:flex;
+
+    gap:18px;
+
+    overflow-x:auto;
+
+    cursor:grab;
+
+    user-select:none;
+
+    padding:
+        10px
+        0
+        25px;
+
+    scrollbar-width:none;
+
+    scroll-snap-type:x proximity;
+}
+
+.skills-scroll::-webkit-scrollbar{
+    display:none;
+}
+
+.skills-scroll.dragging{
+    cursor:grabbing;
+}
+
+.skill-card{
+    flex:
+        0 0
+        min(360px,82vw);
+
+    min-height:280px;
+
+    padding:34px;
+
+    border-radius:24px;
+
+    scroll-snap-align:start;
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.06),
+            rgba(255,255,255,.025)
+        );
+
+    transition:
+        transform .4s var(--ease),
+        border-color .4s;
+}
+
+.skill-card:hover{
+    transform:
+        translateY(-7px);
+
+    border-color:
+        rgba(190,145,255,.35);
+}
+
+.skill-index{
+    color:var(--purple-light);
+
+    font-size:11px;
+
+    margin-bottom:65px;
+}
+
+.skill-name{
+    font-size:24px;
+
+    letter-spacing:-.03em;
+
+    margin-bottom:15px;
+}
+
+.skill-desc{
+    color:
+        rgba(255,255,255,.52);
+
+    line-height:1.65;
+
+    font-size:14px;
+}
+
+
+/* =========================================================
+   CONTACT
+========================================================= */
+
+.contact-title{
+    font-size:
+        clamp(
+            3.5rem,
+            7vw,
+            7.5rem
+        );
+
+    letter-spacing:-.075em;
+
+    line-height:.92;
+
+    margin-bottom:60px;
+}
+
+.contact-email{
+    display:inline-block;
+
+    font-size:
+        clamp(
+            1.4rem,
+            3vw,
+            2.7rem
+        );
+
+    padding-bottom:12px;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.3);
+
+    transition:.35s;
+}
+
+.contact-email:hover{
+    color:var(--purple-light);
+}
+
+.contact-meta{
+    margin-top:45px;
+
+    color:
+        rgba(255,255,255,.45);
+
+    line-height:1.8;
+}
+
+.linkedin{
+    display:inline-block;
+
+    margin-top:20px;
+
+    color:var(--purple-light);
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer{
+    display:flex;
+
+    justify-content:space-between;
+
+    padding:
+        35px
+        max(24px,7vw);
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.08);
+
+    color:
+        rgba(255,255,255,.35);
+
+    font-size:11px;
+}
+
+
+/* =========================================================
+   PROJECT DETAIL
+========================================================= */
+
+.project-detail{
+    position:fixed;
+    inset:0;
+
+    z-index:5000;
+
+    overflow-y:auto;
+
+    background:
+        radial-gradient(
+            circle at 80% 0%,
+            rgba(120,80,190,.12),
+            transparent 35%
+        ),
+        #09090d;
+
+    opacity:0;
+    visibility:hidden;
+
+    transform:scale(.985);
+
+    transition:
+        opacity .65s var(--ease),
+        transform .65s var(--ease),
+        visibility .65s;
+}
+
+.project-detail.active{
+    opacity:1;
+    visibility:visible;
+
+    transform:scale(1);
+}
+
+.detail-close{
+    position:fixed;
+
+    top:28px;
+    right:28px;
+
+    width:52px;
+    height:52px;
+
+    border-radius:50%;
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    background:
+        rgba(20,18,26,.65);
+
+    backdrop-filter:blur(20px);
+
+    color:#fff;
+
+    font-size:22px;
+
+    cursor:none;
+
+    z-index:10;
+}
+
+.detail-container{
+    max-width:1240px;
+
+    margin:auto;
+
+    padding:
+        150px
+        30px
+        120px;
+}
+
+.detail-index{
+    color:var(--purple-light);
+
+    font-size:11px;
+
+    letter-spacing:.17em;
+
+    margin-bottom:24px;
+}
+
+.detail-title{
+    font-size:
+        clamp(
+            3.5rem,
+            8vw,
+            8rem
+        );
+
+    letter-spacing:-.075em;
+
+    line-height:.9;
+
+    margin-bottom:30px;
+}
+
+.detail-subtitle{
+    max-width:850px;
+
+    color:
+        rgba(255,255,255,.55);
+
+    font-size:
+        clamp(1rem,1.8vw,1.5rem);
+
+    line-height:1.6;
+
+    margin-bottom:90px;
+}
+
+
+/* =========================================================
+   GALLERY
+========================================================= */
+
+.detail-gallery{
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:18px;
+    max-width:820px;
+    margin:0 auto 110px;
+}
+
+.video-gallery-item{
+    grid-column:1 / -1;
+    width:min(100%, 720px);
+    aspect-ratio:16 / 9;
+    min-height:0!important;
+    margin:0 auto 6px;
+    background:#141217;
+}
+
+
+.video-gallery-item{ position:relative; }
+.video-sound-toggle{
+    position:absolute; right:14px; bottom:14px; z-index:8;
+    width:42px; height:42px; border-radius:50%;
+    border:1px solid rgba(255,255,255,.18);
+    background:rgba(20,18,26,.72); color:#fff;
+    backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+    cursor:pointer; font-size:17px; opacity:.88; transition:.25s var(--ease);
+}
+.video-sound-toggle:hover{ transform:scale(1.08); opacity:1; }
+
+.video-gallery-item video{
+    width:100%;
+    height:100%;
+    display:block;
+    object-fit:contain;
+    background:#141217;
+}
+
+.gallery-item{
+    width:100%;
+    aspect-ratio:4 / 3;
+    min-height:0;
+
+    overflow:hidden;
+
+    border-radius:24px;
+
+    background:#141217;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+}
+
+.gallery-item:first-child:not(.video-gallery-item){
+    min-height:0;
+}
+
+.gallery-item img{
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    transition:
+        transform 1s var(--ease);
+}
+
+.gallery-item:hover img{
+    transform:scale(1.05);
+}
+
+
+/* =========================================================
+   PROJECT INTRODUCTION
+========================================================= */
+
+.detail-intro{
+    padding:
+        80px 0;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.1);
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.1);
+
+    margin-bottom:90px;
+}
+
+.detail-intro-label{
+    color:
+        rgba(255,255,255,.38);
+
+    font-size:11px;
+
+    letter-spacing:.16em;
+
+    margin-bottom:30px;
+}
+
+.detail-intro-title{
+    font-size:
+        clamp(1.4rem,2.8vw,3.15rem);
+
+    letter-spacing:-.05em;
+
+    line-height:1.08;
+
+    max-width:950px;
+
+    margin-bottom:35px;
+}
+
+.detail-intro-text{
+    max-width:900px;
+
+    color:
+        rgba(255,255,255,.58);
+
+    font-size:
+        clamp(1rem,1.5vw,1.25rem);
+
+    line-height:1.8;
+
+    margin-top:18px;
+}
+
+
+/* =========================================================
+   WORK PARAGRAPH — NO TITLE
+========================================================= */
+
+.work-paragraph{
+    max-width:1050px;
+
+    margin:
+        0
+        0
+        75px;
+
+    padding:
+        35px 0;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.1);
+}
+
+.work-paragraph{
+    margin-bottom:72px;
+}
+
+.work-paragraph p{
+    font-size:
+        clamp(
+            1.05rem,
+            1.7vw,
+            1.45rem
+        );
+
+    line-height:1.75;
+
+    color:
+        rgba(255,255,255,.7);
+
+    margin-bottom:18px;
+}
+
+.work-paragraph .lang-cn{
+    color:
+        rgba(255,255,255,.48);
+}
+
+
+/* =========================================================
+   PROJECT INFORMATION
+========================================================= */
+
+.info-heading{
+    font-size:
+        clamp(2.8rem,5.2vw,5.6rem);
+
+    letter-spacing:-.05em;
+
+    margin-bottom:38px;
+    padding-top:10px;
+}
+
+.info-heading::after{
+    content:"";
+    display:block;
+    width:72px;
+    height:2px;
+    margin-top:18px;
+    background:rgba(255,255,255,.42);
+}
+
+.info-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:35px;
+}
+
+.info-item{
+    border-top:
+        1px solid
+        rgba(255,255,255,.13);
+
+    padding-top:20px;
+}
+
+.info-label{
+    font-size:10px;
+
+    letter-spacing:.15em;
+
+    color:
+        rgba(255,255,255,.38);
+
+    margin-bottom:15px;
+}
+
+.info-value{
+    color:
+        rgba(255,255,255,.8);
+
+    font-size:15px;
+
+    line-height:1.55;
+}
+
+
+/* =========================================================
+   MEDIA
+========================================================= */
+
+.project-design-showcase{
+    margin:52px 0 20px;
+    padding:28px 0 8px;
+    border-top:1px solid rgba(255,255,255,.14);
+}
+.design-showcase-label{
+    font-size:11px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    opacity:.62;
+    margin-bottom:14px;
+}
+.design-showcase-copy{
+    max-width:860px;
+    font-size:17px;
+    line-height:1.8;
+    color:rgba(255,255,255,.82);
+}
+.design-showcase-copy p{margin:0 0 8px}
+.figma-showcase-link{
+    display:inline-flex;
+    margin:16px 0 28px;
+    padding:11px 16px;
+    border:1px solid rgba(255,255,255,.18);
+    border-radius:999px;
+    color:inherit;
+    text-decoration:none;
+    background:rgba(255,255,255,.05);
+}
+.design-showcase-images{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:22px;
+    max-width:920px;
+    margin:0 auto;
+}
+.design-showcase-images .gallery-item{
+    overflow:hidden;
+    border-radius:18px;
+}
+.design-showcase-images img{
+    width:100%;
+    height:auto;
+    display:block;
+}
+@media(max-width:700px){
+    .design-showcase-images{grid-template-columns:1fr}
+}
+.media-section{
+    margin-top:110px;
+
+    padding-top:50px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.1);
+}
+
+.media-label{
+    color:
+        rgba(255,255,255,.38);
+
+    font-size:11px;
+
+    letter-spacing:.15em;
+
+    margin-bottom:25px;
+}
+
+.media-link{
+    display:flex;
+
+    align-items:center;
+    justify-content:space-between;
+
+    gap:25px;
+
+    padding:
+        25px 0;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.08);
+
+    transition:.35s;
+}
+
+.media-link:hover{
+    padding-left:12px;
+
+    color:var(--purple-light);
+}
+
+.media-title{
+    font-size:
+        clamp(1rem,1.8vw,1.45rem);
+
+    margin-bottom:8px;
+}
+
+.media-url{
+    font-size:11px;
+
+    color:
+        rgba(255,255,255,.35);
+
+    word-break:break-all;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:900px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .project-grid{
+        grid-template-columns:1fr;
+    }
+
+    .info-grid{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .detail-gallery{
+        grid-template-columns:1fr;
+    }
+
+    .gallery-item:first-child{
+        grid-row:auto;
+        min-height:0;
+    }
+}
+
+@media(max-width:600px){
+
+    body{
+        cursor:auto;
+    }
+
+    .cursor,
+    .cursor-ring{
+        display:none;
+    }
+
+    nav{
+        width:calc(100% - 24px);
+    }
+
+    .nav-logo{
+        font-size:10px;
+    }
+
+    .hero{
+        padding:
+            120px
+            24px
+            70px;
+    }
+
+    .hero-tag{
+        margin-bottom:38px;
+    }
+
+    .hero-slogan{
+        font-size:
+            clamp(
+                3.1rem,
+                15vw,
+                5.5rem
+            );
+    }
+
+    section:not(.hero){
+        padding:
+            100px
+            24px;
+    }
+
+    .info-grid{
+        grid-template-columns:1fr;
+    }
+
+    footer{
+        flex-direction:column;
+        gap:10px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- =========================================================
+     CURSOR
+========================================================= -->
+
+<div class="cursor"></div>
+<div class="cursor-ring"></div>
+
+
+<!-- =========================================================
+     BACKGROUND
+========================================================= -->
+
+<div class="background"></div>
+<div class="noise"></div>
+
+
+<!-- =========================================================
+     LOADER
+========================================================= -->
+
+<div class="loader" id="loader">
+
+    <div class="loader-inner">
+
+        <div class="loader-title">
+            Human Computer Interaction · Tech x Design · Make World Better
+        </div>
+
+        <div class="loader-cn">
+            人机交互 · 科技 x 设计 · 让世界变得更好
+        </div>
+
+        <div class="loader-name">
+            Delaney Product Manager / UIUX Designer
+        </div>
+
+
+        <!-- ECG LOADING LINE -->
+
+        <div class="ecg-wrap">
+
+            <svg
+                class="ecg"
+                viewBox="0 0 260 48"
+            >
+
+                <defs>
+
+                    <linearGradient
+                        id="ecgGradient"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="0%"
+                    >
+
+                        <stop
+                            offset="0%"
+                            stop-color="#8f70ff"
+                        />
+
+                        <stop
+                            offset="55%"
+                            stop-color="#c68ee8"
+                        />
+
+                        <stop
+                            offset="100%"
+                            stop-color="#ef9bc8"
+                        />
+
+                    </linearGradient>
+
+                </defs>
+
+
+                <path
+                    class="ecg-bg"
+                    d="
+                    M0 24
+                    L45 24
+                    L55 24
+                    L62 13
+                    L69 37
+                    L78 5
+                    L87 24
+                    L112 24
+                    L122 24
+                    L130 18
+                    L138 30
+                    L148 24
+                    L180 24
+                    L190 14
+                    L200 34
+                    L210 24
+                    L260 24
+                    "
+                />
+
+                <path
+                    class="ecg-line"
+                    d="
+                    M0 24
+                    L45 24
+                    L55 24
+                    L62 13
+                    L69 37
+                    L78 5
+                    L87 24
+                    L112 24
+                    L122 24
+                    L130 18
+                    L138 30
+                    L148 24
+                    L180 24
+                    L190 14
+                    L200 34
+                    L210 24
+                    L260 24
+                    "
+                />
+
+            </svg>
+
+        </div>
+
+        <div
+            class="loader-percent"
+            id="loaderPercent"
+        >
+            00%
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     NAV
+========================================================= -->
+
+<nav id="navbar">
+
+    <div class="nav-logo">
+        DELANEY <span>/</span> PORTFOLIO
+    </div>
+
+    <div class="nav-links">
+
+        <a href="#about">ABOUT</a>
+        <a href="#projects">WORK</a>
+        <a href="#skills">SKILLS</a>
+        <a href="#contact">CONTACT</a>
+
+    </div>
+
+    <div class="language-switch">
+
+        <button
+            id="bothBtn"
+            class="active"
+        >
+            BOTH
+        </button>
+
+        <button id="englishBtn">
+            EN
+        </button>
+
+    </div>
+
+</nav>
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero">
+
+    <canvas id="particleCanvas"></canvas>
+
+    <div
+        class="hero-content"
+        id="heroContent"
+    >
+
+        <div class="hero-tag">
+
+            <span class="hero-dot"></span>
+
+            HCI · PRODUCT · GLOBAL DESIGN
+
+        </div>
+
+
+        <!-- BIGGEST: SLOGAN -->
+
+        <div class="hero-slogan">
+
+            <div class="lang-en">
+
+                Tech x Design.<br>
+
+                <span class="gradient">
+                    Globally adapted.
+                </span><br>
+
+                HCI makes human feel<br>
+                tech, anywhere.
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="hero-slogan-cn lang-cn"
+        >
+
+            科技x设计，做全球适配的产品。<br>
+            当人机交互遇见艺术，<br>
+            让科技在任何角落都温柔可感。
+
+        </div>
+
+
+        <!-- NAME BELOW -->
+
+        <div class="hero-person">
+
+            <div class="hero-name">
+
+                Delaney Huaqiu Chen
+
+            </div>
+
+            <div class="hero-role">
+
+                Product Manager / UIUX Designer
+
+            </div>
+
+        </div>
+
+
+        <div class="hero-actions">
+
+            <a
+                href="#projects"
+                class="primary-btn"
+            >
+
+                View My Work ↘
+
+            </a>
+
+            <a
+                href="#about"
+                class="secondary-btn"
+            >
+
+                Discover More ↓
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     ABOUT
+========================================================= -->
+
+<section
+    id="about"
+>
+
+<div class="container">
+
+    <div class="kicker reveal">
+        ABOUT ME
+    </div>
+
+
+    <h2 class="section-title reveal">
+
+        <span class="lang-en">
+
+            HCI, product systems<br>
+            and global experiences.
+
+        </span>
+
+        <span class="lang-cn">
+
+            人机交互、产品系统<br>
+            与全球化体验。
+
+        </span>
+
+    </h2>
+
+
+    <div class="about-text reveal">
+
+        <p class="lang-en">
+
+            Delaney Huaqiu Chen works across Human Computer Interaction,
+            product definition and UIUX design. With a background in
+            HCI and Software Engineering, I focus on connecting technology,
+            people and culture through meaningful product experiences.
+
+        </p>
+
+        <p class="lang-cn">
+
+            北大 HCI × 北航软工背景，
+            以软工 × HCI 交互设计为核心背景。
+
+            参与 AI 项目从 0 到 1 的产品定义与系统设计，
+            基于出海不同国家的消费偏好与文化语境重构人机交互与品牌体验。
+
+            并熟练掌握社区运营与用户数据分析，
+            参与并辅助产品在全球市场自然落地的过程。
+
+        </p>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     PROJECTS
+========================================================= -->
+
+<section
+    id="projects"
+>
+
+<div class="container">
+
+    <div class="kicker reveal">
+        SELECTED WORK
+    </div>
+
+
+    <h2 class="section-title reveal">
+
+        <span class="lang-en">
+            Products, systems<br>
+            and experiences.
+        </span>
+
+        <span class="lang-cn">
+            产品、系统<br>
+            与沉浸式体验。
+        </span>
+
+    </h2>
+
+
+    <div
+        class="project-grid"
+        id="projectGrid"
+    ></div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     SKILLS
+========================================================= -->
+
+<section
+    id="skills"
+>
+
+<div class="container">
+
+    <div class="kicker reveal">
+        CAPABILITIES / DRAG →
+    </div>
+
+    <h2 class="section-title reveal">
+
+        <span class="lang-en">
+            From interaction<br>
+            to global growth.
+        </span>
+
+        <span class="lang-cn">
+            从人机交互<br>
+            到全球用户增长。
+        </span>
+
+    </h2>
+
+
+    <div
+        class="skills-scroll"
+        id="skillsScroll"
+    >
+
+        <div class="skill-card">
+
+            <div class="skill-index">
+                01
+            </div>
+
+            <div class="skill-name">
+                HCI / UIUX
+            </div>
+
+            <div class="skill-desc">
+
+                Human-centered interaction systems,
+                UIUX design, experience strategy,
+                prototyping and usability thinking.
+
+            </div>
+
+        </div>
+
+
+        <div class="skill-card">
+
+            <div class="skill-index">
+                02
+            </div>
+
+            <div class="skill-name">
+                Product Definition
+            </div>
+
+            <div class="skill-desc">
+
+                Product strategy, user scenarios,
+                0→1 product definition and
+                hardware-software experience systems.
+
+            </div>
+
+        </div>
+
+
+        <div class="skill-card">
+
+            <div class="skill-index">
+                03
+            </div>
+
+            <div class="skill-name">
+                Global Community
+            </div>
+
+            <div class="skill-desc">
+
+                Overseas Discord community operation,
+                international user engagement,
+                content communication and localization.
+
+            </div>
+
+        </div>
+
+
+        <div class="skill-card">
+
+            <div class="skill-index">
+                04
+            </div>
+
+            <div class="skill-name">
+                UA & Marketing
+            </div>
+
+            <div class="skill-desc">
+
+                Global advertising strategy,
+                creative production,
+                user acquisition and international marketing.
+
+            </div>
+
+        </div>
+
+
+        <div class="skill-card">
+
+            <div class="skill-index">
+                05
+            </div>
+
+            <div class="skill-name">
+                AI / XR
+            </div>
+
+            <div class="skill-desc">
+
+                AI applications,
+                multimodal interaction,
+                AI Agents, AR and immersive XR systems.
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     CONTACT
+========================================================= -->
+
+<section
+    id="contact"
+>
+
+<div class="container">
+
+    <div class="kicker reveal">
+        CONTACT
+    </div>
+
+
+    <h2 class="contact-title reveal">
+
+        <span class="lang-en">
+            Let's make<br>
+            technology human.
+        </span>
+
+        <span class="lang-cn">
+            让科技<br>
+            更有人情味。
+        </span>
+
+    </h2>
+
+
+    <a
+        class="contact-email reveal"
+        href="mailto:miaopkuecnu778@163.com"
+    >
+
+        miaopkuecnu778@163.com
+
+    </a>
+
+
+    <div class="contact-meta reveal">
+
+        <div>
+            陈华秋 · Chen Huaqiu
+        </div>
+
+        <div>
+            Beijing / Remote / Worldwide
+        </div>
+
+    </div>
+
+
+    <!-- Replace # with your actual LinkedIn URL -->
+
+    <a
+        href="#"
+        class="linkedin reveal"
+        target="_blank"
+    >
+
+        LinkedIn ↗
+
+    </a>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer>
+
+    <span>
+        © 2026 Delaney Huaqiu Chen
+    </span>
+
+    <span>
+        HCI · PRODUCT · UIUX · GLOBAL
+    </span>
+
+</footer>
+
+
+<!-- =========================================================
+     PROJECT DETAIL
+========================================================= -->
+
+<div
+    class="project-detail"
+    id="projectDetail"
+>
+
+    <button
+        class="detail-close"
+        id="detailClose"
+    >
+        ×
+    </button>
+
+
+    <div
+        class="detail-container"
+        id="detailContent"
+    ></div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   LOADER
+========================================================= */
+
+const loader =
+    document.getElementById("loader");
+
+const loaderPercent =
+    document.getElementById("loaderPercent");
+
+let loadValue = 0;
+
+const loadTimer =
+    setInterval(()=>{
+
+        loadValue +=
+            Math.floor(
+                Math.random() * 8
+            ) + 2;
+
+        if(loadValue >= 100){
+
+            loadValue = 100;
+
+            clearInterval(loadTimer);
+
+            loaderPercent.textContent =
+                "100%";
+
+            setTimeout(()=>{
+
+                loader.classList.add(
+                    "hidden"
+                );
+
+            },450);
+
+        }else{
+
+            loaderPercent.textContent =
+                String(loadValue)
+                .padStart(2,"0")
+                + "%";
+
+        }
+
+    },100);
+
+
+/* =========================================================
+   CUSTOM CURSOR
+========================================================= */
+
+const cursor =
+    document.querySelector(".cursor");
+
+const cursorRing =
+    document.querySelector(".cursor-ring");
+
+let mouseX = 0;
+let mouseY = 0;
+
+let ringX = 0;
+let ringY = 0;
+
+
+document.addEventListener(
+    "mousemove",
+    e=>{
+
+        mouseX =
+            e.clientX;
+
+        mouseY =
+            e.clientY;
+
+        cursor.style.left =
+            mouseX + "px";
+
+        cursor.style.top =
+            mouseY + "px";
+
+    }
+);
+
+
+function animateCursor(){
+
+    ringX +=
+        (mouseX-ringX)*.16;
+
+    ringY +=
+        (mouseY-ringY)*.16;
+
+    cursorRing.style.left =
+        ringX+"px";
+
+    cursorRing.style.top =
+        ringY+"px";
+
+    requestAnimationFrame(
+        animateCursor
+    );
+
+}
+
+animateCursor();
+
+
+/* Hover states */
+
+function updateHoverElements(){
+
+    document
+    .querySelectorAll(
+        "a,button,.project-card,.skill-card"
+    )
+    .forEach(el=>{
+
+        el.addEventListener(
+            "mouseenter",
+            ()=>{
+
+                document.body
+                .classList
+                .add("hovering");
+
+            }
+        );
+
+        el.addEventListener(
+            "mouseleave",
+            ()=>{
+
+                document.body
+                .classList
+                .remove("hovering");
+
+            }
+        );
+
+    });
+
+}
+
+
+/* Click ripple */
+
+document.addEventListener(
+    "mousedown",
+    e=>{
+
+        cursor.classList.add(
+            "clicking"
+        );
+
+        cursorRing.classList.add(
+            "clicking"
+        );
+
+        const ripple =
+            document.createElement("div");
+
+        ripple.className =
+            "cursor-ripple";
+
+        ripple.style.left =
+            e.clientX+"px";
+
+        ripple.style.top =
+            e.clientY+"px";
+
+        document.body.appendChild(
+            ripple
+        );
+
+        setTimeout(
+            ()=>ripple.remove(),
+            700
+        );
+
+    }
+);
+
+
+document.addEventListener(
+    "mouseup",
+    ()=>{
+
+        cursor.classList.remove(
+            "clicking"
+        );
+
+        cursorRing.classList.remove(
+            "clicking"
+        );
+
+    }
+);
+
+
+/* =========================================================
+   LANGUAGE
+========================================================= */
+
+const bothBtn =
+    document.getElementById("bothBtn");
+
+const englishBtn =
+    document.getElementById("englishBtn");
+
+
+bothBtn.addEventListener(
+    "click",
+    ()=>{
+
+        document.body.classList.remove(
+            "en-mode"
+        );
+
+        bothBtn.classList.add(
+            "active"
+        );
+
+        englishBtn.classList.remove(
+            "active"
+        );
+
+    }
+);
+
+
+englishBtn.addEventListener(
+    "click",
+    ()=>{
+
+        document.body.classList.add(
+            "en-mode"
+        );
+
+        englishBtn.classList.add(
+            "active"
+        );
+
+        bothBtn.classList.remove(
+            "active"
+        );
+
+    }
+);
+
+
+/* =========================================================
+   NAV HIDE
+========================================================= */
+
+let lastScroll = 0;
+
+const navbar =
+    document.getElementById("navbar");
+
+
+window.addEventListener(
+    "scroll",
+    ()=>{
+
+        const current =
+            window.scrollY;
+
+        if(
+            current > lastScroll
+            &&
+            current > 150
+        ){
+
+            navbar.classList.add(
+                "hide"
+            );
+
+        }else{
+
+            navbar.classList.remove(
+                "hide"
+            );
+
+        }
+
+        lastScroll =
+            current;
+
+    }
+);
+
+
+/* =========================================================
+   HERO APPLE VISION PRO DEPTH
+========================================================= */
+
+const hero =
+    document.querySelector(".hero");
+
+const heroContent =
+    document.getElementById("heroContent");
+
+
+hero.addEventListener(
+    "mousemove",
+    e=>{
+
+        const rect =
+            hero.getBoundingClientRect();
+
+        const x =
+            (
+                e.clientX-rect.left
+            )
+            /
+            rect.width
+            -
+            .5;
+
+        const y =
+            (
+                e.clientY-rect.top
+            )
+            /
+            rect.height
+            -
+            .5;
+
+
+        heroContent.style.transform =
+
+            `
+            perspective(1400px)
+            rotateY(${x*2.5}deg)
+            rotateX(${y*-2}deg)
+            translateZ(16px)
+            `;
+
+    }
+);
+
+
+hero.addEventListener(
+    "mouseleave",
+    ()=>{
+
+        heroContent.style.transform =
+
+            `
+            perspective(1400px)
+            rotateY(0deg)
+            rotateX(0deg)
+            translateZ(0px)
+            `;
+
+    }
+);
+
+
+/* =========================================================
+   HERO PARTICLE NETWORK
+========================================================= */
+
+const canvas =
+    document.getElementById(
+        "particleCanvas"
+    );
+
+const ctx =
+    canvas.getContext("2d");
+
+
+let particles = [];
+
+let canvasMouse = {
+    x:null,
+    y:null
+};
+
+
+function resizeCanvas(){
+
+    canvas.width =
+        window.innerWidth;
+
+    canvas.height =
+        window.innerHeight;
+
+}
+
+resizeCanvas();
+
+window.addEventListener(
+    "resize",
+    resizeCanvas
+);
+
+
+window.addEventListener(
+    "mousemove",
+    e=>{
+
+        canvasMouse.x =
+            e.clientX;
+
+        canvasMouse.y =
+            e.clientY;
+
+    }
+);
+
+
+class Particle{
+
+    constructor(){
+
+        this.x =
+            Math.random()
+            *
+            canvas.width;
+
+        this.y =
+            Math.random()
+            *
+            canvas.height;
+
+        this.vx =
+            (
+                Math.random()-.5
+            )*.25;
+
+        this.vy =
+            (
+                Math.random()-.5
+            )*.25;
+
+        this.size =
+            Math.random()*1.8+.5;
+
+        this.pink =
+            Math.random()>.78;
+
+    }
+
+
+    update(){
+
+        this.x += this.vx;
+        this.y += this.vy;
+
+
+        if(
+            this.x<0
+            ||
+            this.x>canvas.width
+        ){
+
+            this.vx*=-1;
+
+        }
+
+
+        if(
+            this.y<0
+            ||
+            this.y>canvas.height
+        ){
+
+            this.vy*=-1;
+
+        }
+
+
+        if(canvasMouse.x!==null){
+
+            const dx =
+                this.x-canvasMouse.x;
+
+            const dy =
+                this.y-canvasMouse.y;
+
+            const distance =
+                Math.sqrt(
+                    dx*dx+dy*dy
+                );
+
+
+            if(
+                distance<130
+                &&
+                distance>0
+            ){
+
+                this.x +=
+                    dx/distance*.45;
+
+                this.y +=
+                    dy/distance*.45;
+
+            }
+
+        }
+
+    }
+
+
+    draw(){
+
+        ctx.beginPath();
+
+        ctx.arc(
+            this.x,
+            this.y,
+            this.size,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fillStyle =
+            this.pink
+            ?
+            "rgba(232,130,195,.78)"
+            :
+            "rgba(150,115,255,.65)";
+
+        ctx.fill();
+
+    }
+
+}
+
+
+function createParticles(){
+
+    particles=[];
+
+    const count =
+        Math.min(
+            Math.floor(
+                window.innerWidth/22
+            ),
+            80
+        );
+
+
+    for(
+        let i=0;
+        i<count;
+        i++
+    ){
+
+        particles.push(
+            new Particle()
+        );
+
+    }
+
+}
+
+createParticles();
+
+
+function animateParticles(){
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    particles.forEach(
+        particle=>{
+
+            particle.update();
+
+            particle.draw();
+
+        }
+    );
+
+
+    for(
+        let i=0;
+        i<particles.length;
+        i++
+    ){
+
+        for(
+            let j=i+1;
+            j<particles.length;
+            j++
+        ){
+
+            const dx =
+                particles[i].x
+                -
+                particles[j].x;
+
+            const dy =
+                particles[i].y
+                -
+                particles[j].y;
+
+            const distance =
+                Math.sqrt(
+                    dx*dx+dy*dy
+                );
+
+
+            if(
+                distance<150
+            ){
+
+                ctx.beginPath();
+
+                ctx.moveTo(
+                    particles[i].x,
+                    particles[i].y
+                );
+
+                ctx.lineTo(
+                    particles[j].x,
+                    particles[j].y
+                );
+
+                ctx.strokeStyle =
+                    `rgba(
+                        145,
+                        95,
+                        205,
+                        ${.12-distance/1800}
+                    )`;
+
+                ctx.lineWidth=.6;
+
+                ctx.stroke();
+
+            }
+
+        }
+
+    }
+
+
+    requestAnimationFrame(
+        animateParticles
+    );
+
+}
+
+animateParticles();
+
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+const reveals =
+    document.querySelectorAll(
+        ".reveal"
+    );
+
+
+const observer =
+    new IntersectionObserver(
+
+        entries=>{
+
+            entries.forEach(
+                entry=>{
+
+                    if(
+                        entry.isIntersecting
+                    ){
+
+                        entry.target
+                        .classList
+                        .add("visible");
+
+                        observer.unobserve(
+                            entry.target
+                        );
+
+                    }
+
+                }
+            );
+
+        },
+
+        {
+            threshold:.12
+        }
+
+    );
+
+
+reveals.forEach(
+    el=>observer.observe(el)
+);
+
+
+/* =========================================================
+   PROJECT DATA
+========================================================= */
+
+const sharedWorkEN =
+
+    "I worked across product definition, UIUX and interaction design, helping shape the core experience from early user scenarios to system interaction. My work also extended to overseas market communication, Discord community engagement and user acquisition strategy, connecting the product experience with how it would be understood and adopted by international audiences.";
+
+
+const sharedWorkCN =
+
+    "我参与产品定义、UIUX 与交互设计，从早期用户场景到整体系统交互共同塑造核心产品体验。同时，我的工作也延伸至海外市场传播、Discord 社区运营与用户增长策略，将产品体验与国际市场用户的理解、接受和使用方式连接起来。";
+
+
+const projects = [
+    {
+        number:"01 / AI HARDWARE", title:"Toytale AI Cam", titleCN:"儿童 AI 故事相机",
+        cardDesc:"A children's AI storytelling camera transforming everyday moments into interactive stories.",
+        subtitle:"AI-powered storytelling through children's everyday experiences.", subtitleCN:"通过儿童日常体验生成 AI 故事与绘本。",
+        video:"images/project1.mp4", images:["images/project1-2.jpg","images/project1-3.jpg"],
+        introEN:"Toytale AI Cam explores a new relationship between children, cameras and artificial intelligence. Children capture the world around them, while AI transforms moments into personalized stories and picture-book experiences.",
+        introCN:"Toytale AI Cam 探索儿童、相机与人工智能之间新的创造性交互方式。孩子通过拍摄自己的世界，让 AI 将真实生活中的瞬间转化为个性化故事与绘本体验。",
+        role:"Founder · Product Manager · UIUX · Global Growth", roleCN:"创始人 · 产品经理 · UIUX · 海外增长", timeline:"2025 — Present", timelineCN:"2025 — 至今", team:"AI Hardware Product Team", teamCN:"AI 硬件产品团队", impact:"Product Definition · Interaction · BD · UA · Community", impactCN:"产品定义 · 交互设计 · BD · UA · 社区运营", roleDetailEN:"Led product definition and UIUX/interaction design; operated the overseas Discord community, supported global UA and BD, and connected product experience with international user acquisition.", roleDetailCN:"负责产品定义与 UIUX / 交互设计；运营海外 Discord 社区，参与海外 UA 投放与 BD，对接国际用户获取与产品体验。", timelineDetailEN:"2025 — Present · From product concept and definition through prototype, exhibition and overseas customer development.", timelineDetailCN:"2025 — 至今 · 从产品概念与定义，到原型、展会展示及海外客户拓展。", teamDetailEN:"AI hardware product work spanning product, design, community and growth, with direct international partner communication.", teamDetailCN:"覆盖产品、设计、社区与增长的 AI 硬件项目工作，并直接参与国际合作伙伴沟通。", impactDetailEN:"Defined the product experience, designed UIUX and interaction, operated Discord, supported overseas UA and BD, exhibited at BEYOND Expo 2026, and secured a 3,000-unit UK customer intent order.", impactDetailCN:"完成产品体验定义与 UIUX / 交互设计，运营 Discord 并参与海外 UA / BD；参展 2026 澳门 BEYOND Expo，并获得英国客户 3000 台意向订单。",
+        workEN:"I proposed and initiated ToyTale AI Cam, an AI children's storytelling camera that turns children's photographed subjects, including plush toys, into storybook characters. I lead the product direction and also handle overseas Discord community operations, global user acquisition and BD; the project was presented at BEYOND Expo 2026 in Macau and secured an intent order for 3,000 units from a key UK customer.",
+        workCN:"我提出并发起 ToyTale AI Cam，将小朋友拍摄的主体与毛绒玩具转化为故事书主角，保护儿童想象力。负责产品方向，同时负责海外 Discord 社区运营与海外投放，并主导海外 BD；项目参展 2026 澳门 BEYOND Expo，并拿下英国重点客户 3000 台意向订单。",
+        mediaTitle:"Bibo Is The Most Unexpectedly Charming Robot I Saw At CES 2026", mediaTitleCN:"CES 2026 媒体报道", mediaURL:"https://www.theouterhaven.net/bibo-is-the-most-unexpectedly-charming-robot-i-saw-at-ces-2026/"
+    },
+    {
+        number:"02 / AI COMPANION", title:"AI Companion Toy", titleCN:"AI 潮玩生命体玩具",
+        cardDesc:"An AI-powered collectible companion combining emotional interaction and global community.",
+        subtitle:"AI, personality and collectible culture in one interactive companion.", subtitleCN:"将 AI、个性与潮玩文化融合在一个可交互的陪伴产品中。",
+        video:null, images:["images/project2-2.jpg","images/project2-3.jpg"],
+        introEN:"An AI companion designed around emotional interaction, playful behavior and collectible culture. The project connects intelligent hardware, conversational AI and overseas community building.",
+        introCN:"一个围绕情感交互、游戏化行为与潮玩文化设计的 AI 陪伴产品，连接智能硬件、对话式 AI 与全球用户社区。",
+        role:"Interaction Design · Global Marketing & Growth", roleCN:"交互设计 · 海外市场营销与增长", timeline:"2025 — 2026", timelineCN:"2025 — 2026", team:"AI Companion Product Team", teamCN:"AI 潮玩产品团队", impact:"Interaction · Global Growth · BD", impactCN:"交互设计 · 海外增长 · BD", roleDetailEN:"Owned interaction design while leading overseas marketing and growth; supported social content, channel outreach and partner communication across North America, Europe and Japan.", roleDetailCN:"负责交互设计并主导海外市场营销与增长；参与海外内容传播、渠道拓展及北美、欧洲、日本合作伙伴对接。", timelineDetailEN:"2025 — 2026 · Interaction design and overseas marketing/growth work through CES 2026 and partner outreach.", timelineDetailCN:"2025 — 2026 · 围绕交互设计与海外营销增长持续推进，并通过 CES 2026 进行国际市场展示。", teamDetailEN:"AI companion product team covering interaction design, overseas marketing, growth and partner development.", teamDetailCN:"AI 陪伴产品团队，负责交互设计、海外营销、增长及合作伙伴拓展。", impactDetailEN:"Designed the interaction experience and led overseas marketing and growth; supported content and channel outreach across North America, Europe and Japan, where the product attracted partner attention at CES 2026.", impactDetailCN:"负责交互体验设计并主导海外营销与增长；参与内容传播、渠道拓展及北美、欧洲、日本合作伙伴对接，产品在 2026 CES 获得关注。",
+        workEN:"I was responsible for interaction design for the company's first AI toy combining hardware and software, while leading overseas marketing and growth. The product gained strong attention at CES 2026 and attracted channel partners and potential collaborators across North America, Europe and Japan.",
+        workCN:"负责公司首款软硬件结合 AI 潮玩产品的交互设计，并主导海外市场营销与增长。产品在 2026 CES 展会获得广泛关注，同时对接北美、欧洲、日本等地渠道商与合作伙伴。", mediaTitle:"bibo — The Most Unexpectedly Charming Robot I Saw at CES 2026", mediaTitleCN:"bibo — CES 2026 媒体报道", mediaURL:"https://www.theouterhaven.net/bibo-is-the-most-unexpectedly-charming-robot-i-saw-at-ces-2026/"
+    },
+    {
+        number:"03 / AI GAME COMPANION", title:"AI Game Companion", titleCN:"AI 游戏陪伴产品",
+        cardDesc:"An intelligent AI gaming companion designed not to interrupt player flow.",
+        subtitle:"A China–US oriented AI companion product for gamers, connecting product, interaction, BD and community.", subtitleCN:"面向中美市场的 AI 游戏陪伴产品，连接产品、交互、BD 与社区运营。",
+        video:"images/project3.mp4", images:["images/project3-2.jpg","images/project3-3.jpg"], extraImages:["images/project3-4.jpg","images/project3-5.jpg"], figmaURL:"https://www.figma.com/proto/WMYX5BuJPWoVCAOISyVXRF/Copy-to-Figma---ReforeAI--Community-?page-id=0%3A1&node-id=1-48&p=f&viewport=-10%2C213%2C0.44&t=LLiRGelD49HXMyFl-1&scaling=min-zoom&content-scaling=fixed",
+        introEN:"An AI game companion product designed for players in China and the United States. The product focuses on contextual assistance and companionship without interrupting gameplay flow, while connecting product development with business collaboration and Discord community operation.",
+        introCN:"面向中美市场的智能 AI 游戏陪伴产品，聚焦“不打断玩家心流”的交互体验。我负责产品经理、UIUX 设计、BD 合作与 Discord 社区运营，推动产品体验、合作与用户反馈闭环。",
+        role:"Product Partner · Product Manager · UIUX · BD · Discord", roleCN:"产品合伙人 · 产品经理 · UIUX · BD · Discord", timeline:"2025.11 — 2026.7", timelineCN:"2025.11 — 2026.7", team:"AI Game Companion Team", teamCN:"AI 游戏陪伴团队", impact:"Product Definition · Interaction · BD · UA · Community", impactCN:"产品定义 · 交互设计 · BD · UA · 社区运营", roleDetailEN:"Led product definition and UIUX design, coordinated BD collaboration, and built and operated a North American Discord community to collect user feedback and feed insights back into product iteration; supported overseas UA and Steam growth.", roleDetailCN:"主导产品定义与 UIUX 设计，推进 BD 合作；从 0 搭建并运营北美 Discord 社区，通过用户反馈驱动产品迭代，同时参与海外 UA 与 Steam 用户增长。", timelineDetailEN:"2025.11 — 2026.7 · Product definition, iteration, overseas growth and community operation across China and US markets.", timelineDetailCN:"2025.11 — 2026.7 · 覆盖中美市场的产品定义、迭代、海外增长与社区运营。", teamDetailEN:"Cross-functional work across product, UIUX, BD and community, with collaboration involving Sony/SAIC-led teams, Stanford University and MIT Media Lab projects.", teamDetailCN:"跨产品、UIUX、BD 与社区运营协作，并参与与索尼、上汽高管领衔团队以及斯坦福大学、MIT Media Lab 的合作项目。", impactDetailEN:"Led UIUX and product iteration with overseas user data; built a 500+ member North American Discord community, supported Google/Meta/TikTok UA and KOL/Steam growth, and helped the product reach 4,000+ registered users.", impactDetailCN:"基于海外用户数据驱动 UIUX 与产品迭代；从 0 搭建 500+ 成员北美 Discord 社区，参与 Google / Meta / TikTok UA 及 KOL、Steam 用户增长，产品注册用户超 4000 人。",
+        workEN:"I led product definition and interaction design for an AI game companion for China and US markets, designing an experience that does not interrupt player flow. I worked with a team led by executives from Sony and SAIC, used overseas market data to drive product iteration, and connected product work with BD collaboration and Discord community operations. The product launched on Steam and reached more than 4,000 registered users, with ongoing collaboration involving Stanford University and the MIT Media Lab.",
+        workCN:"主导面向中美市场的 AI 游戏陪伴产品定义与交互设计，打造“不打断玩家心流”的陪伴体验；与索尼、上汽高管领衔的团队合作落地。基于海外市场数据驱动产品迭代，并将产品设计、BD 合作与 Discord 社区运营连接起来。产品已在 Steam 正式发布，注册用户超 4000 人，合作项目与斯坦福大学、MIT Media Lab 保持长期合作。", mediaTitle:"Project Documentation", mediaTitleCN:"项目资料", mediaURL:"#"
+    },
+    {
+        number:"04 / AI EDUCATION", title:"Artificial Intelligence Education Smart Blocks", titleCN:"人工智能教育智能积木",
+        cardDesc:"AI education smart blocks combining hardware, software and curriculum design.", subtitle:"A hands-on AI education system for schools and institutions.", subtitleCN:"面向学校与教育机构的 AI 实践教育系统。",
+        images:["images/project4.jpg","images/project4-2.jpg","images/project4-3.jpg"],
+        introEN:"An AI education smart-block product integrating hardware design, supporting software and curriculum systems. The project connected product development with school implementation and educational scenarios.",
+        introCN:"人工智能教育智能积木项目，负责产品经理与课程设计工作，覆盖智能硬件、配套软件与课程体系，并推动产品进入学校和教育机构场景。",
+        role:"Product Manager · Curriculum Design", roleCN:"产品经理 · 课程设计", timeline:"2024 — 2025", timelineCN:"2024 — 2025", team:"AI Education Product Team", teamCN:"AI 教育产品团队", impact:"Hardware · Software · Curriculum · Deployment", impactCN:"硬件 · 软件 · 课程 · 落地", roleDetailEN:"Managed hardware design, supporting software development and curriculum design, translating the product into classroom-ready educational scenarios and reaching 60+ schools and institutions.", roleDetailCN:"负责硬件设计、配套软件开发与课程体系搭建，将产品转化为可落地的课堂教育场景，已覆盖 60+ 所学校和机构。", timelineDetailEN:"2024 — 2025 · Product development from hardware and supporting software to curriculum implementation.", timelineDetailCN:"2024 — 2025 · 从硬件、配套软件到课程体系落地的完整产品开发。", teamDetailEN:"AI education product work connecting hardware, software and teaching scenarios for schools and institutions.", teamDetailCN:"连接硬件、软件与教学场景的 AI 教育产品工作，面向学校与教育机构落地。", impactDetailEN:"Designed hardware/software experience and curriculum structure, connecting product development with real educational scenarios and reaching 60+ schools and institutions.", impactDetailCN:"负责硬件、软件体验与课程体系设计，将产品开发与真实教育场景结合，已覆盖超过 60 所学校和机构。",
+        workEN:"I was responsible for hardware design, supporting software development and curriculum-system construction for an AI education smart-block product. I connected product development with real educational scenarios, with the resulting system successfully reaching more than 60 schools and institutions.",
+        workCN:"负责人工智能教育智能积木的硬件设计、配套软件开发及课程体系搭建，将产品设计与真实教育场景结合，最终已成功覆盖超过 60 所学校和机构。", mediaTitle:"Project Documentation", mediaTitleCN:"项目资料", mediaURL:"#"
+    },
+    {
+        number:"05 / IMMERSIVE XR", title:"Physical AI × VR", titleCN:"沉浸式 XR 大空间项目",
+        cardDesc:"Large-scale immersive XR project design exploring Physical AI and spatial experience.", subtitle:"Immersive spatial experiences driven by semantic intelligence and Physical AI.", subtitleCN:"由语义智能与 Physical AI 驱动的沉浸式空间体验。",
+        video:"images/project5.mp4", images:["images/project5.jpg","images/project5-2.jpg","images/project5-3.jpg"],
+        introEN:"A large-scale immersive XR project exploring how Physical AI semantic understanding can be translated into perceivable spatial experiences, including content design, interaction narrative and market promotion.",
+        introCN:"沉浸式 XR 大空间项目设计，围绕 Physical AI 与空间智能展开，负责部分内容设计、项目内容制作、交互文案及市场推广。",
+        role:"Interaction Design · Content Design · Market Promotion", roleCN:"交互设计 · 内容体验 · 市场推广", timeline:"2025.9 — 2025.12", timelineCN:"2025.9 — 2025.12", team:"XR Experience Team", teamCN:"XR 体验团队", impact:"Physical AI · XR · Content · Promotion", impactCN:"Physical AI · XR · 内容 · 推广", roleDetailEN:"Designed exhibition content and interaction copy, translating Physical AI semantic understanding into an immersive XR experience; also supported project content production and market promotion.", roleDetailCN:"负责展览内容设计与交互文案，将 Physical AI 的语义理解转化为沉浸式 XR 体验；同时参与项目内容制作与市场推广。", timelineDetailEN:"2025.9 — 2025.12 · Immersive XR content and exhibition interaction development.", timelineDetailCN:"2025.9 — 2025.12 · 沉浸式 XR 内容与展览交互开发。", teamDetailEN:"XR experience team working across Physical AI, immersive content, interaction writing and exhibition communication.", teamDetailCN:"XR 体验团队，协作方向包括 Physical AI、沉浸式内容、交互文案与展览传播。", impactDetailEN:"Translated Physical AI semantic understanding into exhibition content and interaction copy, while supporting content production and selected market-promotion work.", impactDetailCN:"将 Physical AI 语义理解转化为展览内容与交互文案，同时参与项目内容制作及部分市场推广工作。",
+        workEN:"I was responsible for project content production and exhibition interaction copy, translating Physical AI semantic understanding into a perceivable immersive experience. My work covered content design, interaction narrative and selected market-promotion activities.",
+        workCN:"负责项目内容设计制作及展览交互文案开发，将 Physical AI 的语义理解能力转化为可感知的沉浸式体验，同时参与部分市场推广工作。", mediaTitle:"Exhibition Documentation", mediaTitleCN:"展览项目资料", mediaURL:"#"
+    },
+    {
+        number:"06 / INDIE GAME", title:"Independent Game Development", titleCN:"独立游戏开发",
+        cardDesc:"An independent game developed from story concept to Unity prototype.", subtitle:"Independent development across narrative, Unity and AI-assisted asset exploration.", subtitleCN:"覆盖叙事、Unity 开发与 AI 辅助资产探索的独立开发项目。",
+        video:"images/project6.mp4", images:["images/project6.jpg"],
+        introEN:"An independent game project covering story planning, Unity development and selected AI-assisted modeling. The work explored the full path from creative concept to a playable prototype.",
+        introCN:"独立游戏开发项目，独立完成游戏故事策划、Unity 开发及部分 AI 辅助建模，从创意到可执行原型进行全流程把控。",
+        role:"Game Planning · Unity Development", roleCN:"游戏策划 · Unity 开发", timeline:"2023.9 — 2024.1", timelineCN:"2023.9 — 2024.1", team:"Independent", teamCN:"个人独立项目", impact:"Narrative · Unity · AI-assisted Modeling · Prototype", impactCN:"叙事策划 · Unity · AI 辅助建模 · 原型", roleDetailEN:"Handled story planning, Unity development and selected AI-assisted modeling independently, taking the project from initial concept through an executable prototype.", roleDetailCN:"独立完成故事策划、Unity 开发及部分 AI 辅助建模，从创意构思推进到可执行原型。", timelineDetailEN:"2023.9 — 2024.1 · Independent project developed from narrative concept to executable Unity prototype.", timelineDetailCN:"2023.9 — 2024.1 · 从叙事构思到 Unity 可执行原型的独立开发项目。", teamDetailEN:"Independent end-to-end work covering game planning, Unity development and selected AI-assisted modeling.", teamDetailCN:"独立完成游戏策划、Unity 开发及部分 AI 辅助建模的全流程工作。", impactDetailEN:"Controlled the complete production path from story concept and gameplay planning to a working prototype.", impactDetailCN:"从故事构思、玩法策划到可执行原型，全流程独立推进。",
+        workEN:"I independently completed the game story planning, Unity development and selected AI-assisted modeling, controlling the full process from creative concept to an executable prototype.",
+        workCN:"独立完成游戏故事策划、Unity 开发及部分 AI 辅助建模，从创意到可执行原型进行全流程把控。", mediaTitle:"Project Documentation", mediaTitleCN:"项目资料", mediaURL:"#"
+    },
+    {
+        number:"07 / LOVE LINK", title:"lovelink", titleCN:"LoveLink 可穿戴交互项目",
+        cardDesc:"A wearable interaction project centered on the watch-based LoveLink experience.", subtitle:"Exploring intimate interaction and connected experiences through a wearable device.", subtitleCN:"通过可穿戴设备探索连接感与亲密交互体验。",
+        video:"images/project7.mp4", images:["images/project7.jpg","images/project7-2.jpg","images/project7-3.jpg"],
+        introEN:"lovelink is a wearable interaction project centered on a watch-based product experience, exploring connection, interaction and emotional communication through everyday technology.",
+        introCN:"lovelink 是一个以手表为核心载体的可穿戴交互项目，探索日常科技中的连接、互动与情感沟通体验。",
+        role:"Product Design · UIUX · Interaction Design", roleCN:"产品设计 · UIUX · 交互设计", timeline:"Project Experience", timelineCN:"项目经历", team:"Product Design Team", teamCN:"产品设计团队", impact:"Wearable · UIUX · Interaction", impactCN:"可穿戴 · UIUX · 交互设计", roleDetailEN:"Focused on product and UIUX interaction for a wearable watch experience, exploring how everyday device interactions can support connection and emotional communication.", roleDetailCN:"围绕可穿戴手表体验进行产品与 UIUX 交互设计，探索日常设备如何承载连接感与情感沟通。", timelineDetailEN:"Project Experience · Wearable interaction exploration centered on a watch-based product.", timelineDetailCN:"项目经历 · 围绕手表产品展开的可穿戴交互探索。", teamDetailEN:"Product design team focused on wearable UIUX, interaction patterns and connected experiences.", teamDetailCN:"产品设计团队，聚焦可穿戴 UIUX、交互方式与连接体验。", impactDetailEN:"Explored product and UIUX interaction for everyday wearable use, with emphasis on connection and emotional communication.", impactDetailCN:"围绕日常可穿戴使用场景探索产品与 UIUX 交互，强调连接感与情感沟通。",
+        workEN:"I worked on the wearable interaction experience around the LoveLink watch, focusing on product interaction, interface experience and the ways everyday technology can support connection and emotional communication.",
+        workCN:"围绕 LoveLink 手表开展可穿戴产品与交互设计，关注日常科技中的连接、互动与情感沟通体验。", mediaTitle:"Project Documentation", mediaTitleCN:"项目资料", mediaURL:"#"
+    },
+    {
+        number:"08 / INCUBATOR", title:"Incubator Investment Advisor & Project Lead", titleCN:"孵化器投资顾问与项目主管",
+        cardDesc:"Technology commercialization and startup incubation at Shanghai Lingang ECNU Advanced Technology Research Institute.", subtitle:"Connecting university research, commercialization and startup incubation.", subtitleCN:"连接高校科研、技术转化与创业项目孵化。",
+        images:["images/project8.jpg","images/project8-2.jpg","images/project8-3.jpg"],
+        introEN:"Worked as an incubator investment advisor and project lead, supporting university professors and research teams in translating frontier technologies into marketable products and companies.",
+        introCN:"在上海临港华东师大先进技术研究院担任孵化器投资顾问与项目主管，推动高校前沿技术成果转化与项目孵化，并参与“华创未来”创业投资沙龙组织。",
+        role:"Investment Advisor · Project Lead", roleCN:"投资顾问 · 项目主管", timeline:"2024 — 2026.2", timelineCN:"2024 — 2026.2", team:"Shanghai Lingang ECNU Advanced Technology Research Institute", teamCN:"上海临港华东师大先进技术研究院", impact:"Technology Transfer · Incubation · Investment", impactCN:"技术转化 · 项目孵化 · 投资", roleDetailEN:"Led startup-investment salon and incubation work, helping university researchers translate frontier technologies into market-oriented products; supported the incubation of 20+ project companies across AI, education technology and smart hardware.", roleDetailCN:"负责创业投资沙龙与项目孵化工作，协助高校科研人员将前沿技术转化为市场化产品；成功孵化 20+ 项目公司，覆盖 AI、教育科技与智能硬件。", timelineDetailEN:"2024 — 2026.2 · Technology commercialization, investment salon operation and startup incubation.", timelineDetailCN:"2024 — 2026.2 · 技术转化、创业投资沙龙运营与项目孵化。", teamDetailEN:"Shanghai Lingang ECNU Advanced Technology Research Institute, working with university researchers and entrepreneurial teams.", teamDetailCN:"上海临港华东师大先进技术研究院，协作对象包括高校科研人员与创业团队。", impactDetailEN:"Helped translate frontier research into market-oriented products and supported the incubation of 20+ project companies across AI, education technology and smart hardware.", impactDetailCN:"协助将前沿科研成果转化为市场化产品，成功孵化 20+ 项目公司，覆盖 AI、教育科技与智能硬件。",
+        workEN:"I served as an incubator investment advisor and project lead, leading the Huachuang Future entrepreneurship and investment salon and helping university professors translate frontier technologies into marketable products. More than 20 project companies were successfully incubated across AI, education technology and smart hardware.",
+        workCN:"担任上海临港华东师大先进技术研究院孵化器投资顾问与项目主管，主要负责“华创未来”创业投资沙龙，协助高校教授将前沿技术转化为可市场化产品。累计成功孵化超过 20 家项目公司，覆盖 AI、教育科技与智能硬件等领域。", mediaTitle:"Project Documentation", mediaURL:"#"
+    },
+    {
+        number:"09 / AI AGENT", title:"AI Agent Communication · LLM Robotic Arm Control", titleCN:"AI Agent 通信 · 大模型调度控制机械臂",
+        cardDesc:"AI Agent communication and large-model scheduling for controlling a robotic arm.", subtitle:"Human-computer interaction for connecting language models with physical robotic systems.", subtitleCN:"连接大模型与物理机器人系统的人机交互设计。",
+        video:"images/project9.mp4", images:["images/project9.jpg","images/project9-2.jpg"],
+        introEN:"A project connecting AI Agent communication and large language model scheduling with robotic-arm control, focusing on human-computer interaction, interface functionality and prompt engineering.",
+        introCN:"AI Agent 通信 · 大模型调度控制机械臂项目，负责人与机械系统之间的人机交互方案与界面功能设计，并担任 Prompt 工程师参与算法改进。",
+        role:"HCI Design · UIUX · Prompt Engineering", roleCN:"人机交互设计 · UIUX · Prompt 工程", timeline:"Shanghai Chuangzhi Institute · 2024.3", timelineCN:"上海创智学院 · 2024.3", team:"Research Project", teamCN:"研究项目", impact:"AI Agent · LLM Scheduling · Robotic Arm", impactCN:"AI Agent · 大模型调度 · 机械臂", roleDetailEN:"Designed the human-computer interaction and interface functions for an AI Agent communication system, worked on prompt engineering and participated in algorithm improvement for LLM-based robotic-arm control.", roleDetailCN:"负责人机交互方案与界面功能设计，承担 Prompt 工程，并参与基于大模型调度控制机械臂的算法改进。", timelineDetailEN:"Shanghai Chuangzhi Institute · 2024.3 · HCI and interface design for an LLM-driven physical-agent system.", timelineDetailCN:"上海创智学院 · 2024.3 · 面向大模型驱动物理智能体系统的人机交互与界面设计。", teamDetailEN:"Research project combining HCI, UIUX, prompt engineering, LLM scheduling and robotic-arm control.", teamDetailCN:"融合 HCI、UIUX、Prompt 工程、大模型调度与机械臂控制的研究项目。", impactDetailEN:"Designed interaction flows and interface functions, worked on prompt engineering and participated in algorithm improvement for LLM-based robotic-arm scheduling and control.", impactDetailCN:"负责人机交互流程与界面功能设计，承担 Prompt 工程，并参与大模型调度控制机械臂的算法改进。",
+        workEN:"I led the human-computer interaction approach and interface-function design for an AI Agent communication project that used large-language-model scheduling to control a robotic arm. I also worked as a prompt engineer and participated in algorithm improvement.",
+        workCN:"负责人机交互方案与界面功能设计，围绕 AI Agent 通信与大模型调度控制机械臂进行交互设计；同时担任 Prompt 工程师并参与算法改进。", mediaTitle:"Project Documentation", mediaURL:"#"
+    }
+];
+
+
+/* =========================================================
+   RENDER PROJECT CARDS
+========================================================= */
+
+const projectGrid =
+    document.getElementById(
+        "projectGrid"
+    );
+
+
+projects.forEach(
+    (project,index)=>{
+
+        const card =
+            document.createElement(
+                "article"
+            );
+
+        card.className =
+            "project-card";
+
+        card.innerHTML = `
+
+            <div
+                class="project-image"
+                style="
+                    background-image:
+                    url('${project.images[0] || 'images/project-placeholder.jpg'}')
+                "
+            ></div>
+
+            <div class="project-overlay"></div>
+
+            <div class="project-content">
+
+                <div class="project-number">
+                    ${project.number}
+                </div>
+
+                <h3 class="project-title">
+                    <span class="lang-en">${project.title}</span>
+                    <span class="lang-cn">${project.titleCN || project.title}</span>
+                </h3>
+
+                <p class="project-desc">
+                    <span class="lang-en">${project.cardDesc}</span>
+                    <span class="lang-cn">${project.cardDescCN || project.cardDesc}</span>
+                </p>
+
+            </div>
+        `;
+
+
+        /* Mouse Glow */
+
+        card.addEventListener(
+            "mousemove",
+            e=>{
+
+                const rect =
+                    card.getBoundingClientRect();
+
+                const x =
+                    e.clientX-rect.left;
+
+                const y =
+                    e.clientY-rect.top;
+
+
+                card.style.setProperty(
+                    "--mouse-x",
+                    x+"px"
+                );
+
+                card.style.setProperty(
+                    "--mouse-y",
+                    y+"px"
+                );
+
+
+                /* Tilt */
+
+                const rotateY =
+                    (
+                        x/rect.width-.5
+                    )*6;
+
+                const rotateX =
+                    (
+                        y/rect.height-.5
+                    )*-6;
+
+
+                card.style.transform =
+
+                    `
+                    perspective(1000px)
+                    rotateX(${rotateX}deg)
+                    rotateY(${rotateY}deg)
+                    translateY(-6px)
+                    `;
+
+            }
+        );
+
+
+        card.addEventListener(
+            "mouseleave",
+            ()=>{
+
+                card.style.transform =
+                    "";
+
+            }
+        );
+
+
+        card.addEventListener(
+            "click",
+            ()=>openProject(index)
+        );
+
+
+        projectGrid.appendChild(
+            card
+        );
+
+    }
+);
+
+
+updateHoverElements();
+
+
+/* =========================================================
+   PROJECT DETAIL
+========================================================= */
+
+const detail =
+    document.getElementById(
+        "projectDetail"
+    );
+
+const detailContent =
+    document.getElementById(
+        "detailContent"
+    );
+
+
+function openProject(index){
+
+    const p =
+        projects[index];
+
+
+    function setupProjectVideos(){
+        document.querySelectorAll(".video-gallery-item video").forEach(video=>{
+            video.loop = false;
+            video.muted = false;
+            video.volume = 1;
+            setTimeout(()=>{
+                video.play().catch(()=>{
+                    // Browser autoplay policies may require a click for sound.
+                    video.muted = true;
+                    video.play().catch(()=>{});
+                    const btn = video.parentElement.querySelector(".video-sound-toggle");
+                    if(btn) btn.textContent = "🔇";
+                });
+            },1200);
+            video.addEventListener("ended", ()=>{
+                video.pause();
+                video.currentTime = 0;
+            });
+        });
+        document.querySelectorAll(".video-sound-toggle").forEach(btn=>{
+            btn.addEventListener("click", e=>{
+                e.preventDefault();
+                e.stopPropagation();
+                const video = btn.parentElement.querySelector("video");
+                video.muted = !video.muted;
+                if(!video.muted) video.volume = 1;
+                btn.textContent = video.muted ? "🔇" : "🔊";
+                if(video.paused) video.play().catch(()=>{});
+            });
+        });
+    }
+detailContent.innerHTML = `
+
+        <div class="detail-index">
+            ${p.number}
+        </div>
+
+
+        <h2 class="detail-title">
+            <span class="lang-en">${p.title}</span>
+            <span class="lang-cn">${p.titleCN || p.title}</span>
+        </h2>
+
+
+        <div class="detail-subtitle">
+            <span class="lang-en">${p.subtitle}</span>
+            <span class="lang-cn">${p.subtitleCN || p.subtitle}</span>
+        </div>
+
+
+        <!-- GALLERY -->
+
+        <div class="detail-gallery">
+            ${p.video ? `<div class="gallery-item video-gallery-item"><video src="${p.video}" controls playsinline preload="metadata"></video><button class="video-sound-toggle" type="button" aria-label="Toggle sound">🔊</button></div>` : ''}
+            ${p.images.map(img=>`<div class="gallery-item"><img src="${img}" alt="${p.title}"></div>`).join('')}
+        </div>
+
+
+        <!-- PROJECT INTRODUCTION -->
+
+        <div class="detail-intro">
+
+            <div class="detail-intro-label">
+                <span class="lang-en">PROJECT INTRODUCTION</span>
+                <span class="lang-cn">项目介绍</span>
+            </div>
+
+
+            <h3 class="detail-intro-title">
+
+                <span class="lang-en">
+                    Technology becomes meaningful
+                    when interaction feels human.
+                </span>
+
+                <span class="lang-cn">
+                    当科技真正理解人，
+                    交互才会产生温度。
+                </span>
+
+            </h3>
+
+
+            <p class="detail-intro-text lang-en">
+                ${p.introEN}
+            </p>
+
+            <p class="detail-intro-text lang-cn">
+                ${p.introCN}
+            </p>
+
+        </div>
+
+
+        <!-- WORK PARAGRAPH — NO HEADING -->
+
+        <div class="work-paragraph">
+
+            <p class="lang-en">
+                ${p.workEN || sharedWorkEN}
+            </p>
+
+            <p class="lang-cn">
+                ${p.workCN || sharedWorkCN}
+            </p>
+
+        </div>
+
+
+        ${p.figmaURL ? `
+        <div class="project-design-showcase">
+            <div class="design-showcase-label">
+                <span class="lang-en">MOBILE APP UIUX DESIGN</span>
+                <span class="lang-cn">手机端 APP UIUX 设计</span>
+            </div>
+            <div class="design-showcase-copy">
+                <p class="lang-en">I was responsible for the UIUX design of the mobile app from 0 to 1, building my own AI-assisted design workflow to move quickly from product requirements to interaction structure, interface design and deliverable prototypes.</p>
+                <p class="lang-cn">我负责从 0 到 1 的手机端 App UIUX 设计，建立自己的 AI 设计工作流，从产品需求、交互结构到界面设计与可交付原型进行快速设计与交付。</p>
+            </div>
+            <a class="figma-showcase-link" href="${p.figmaURL}" target="_blank" rel="noopener">
+                <span class="lang-en">View Figma Prototype ↗</span>
+                <span class="lang-cn">查看 Figma 原型 ↗</span>
+            </a>
+            <div class="design-showcase-images">
+                ${(p.extraImages || []).map(img=>`<div class="gallery-item"><img src="${img}" alt="${p.title} UIUX design"></div>`).join('')}
+            </div>
+        </div>
+        ` : ''}
+
+
+        <!-- PROJECT INFORMATION -->
+
+        <div>
+
+            <h3 class="info-heading">
+                <span class="lang-en">Project Information</span>
+                <span class="lang-cn">项目信息</span>
+            </h3>
+
+
+            <div class="info-grid">
+
+
+                <div class="info-item">
+
+                    <div class="info-label">
+                        <span class="lang-en">ROLE</span>
+                        <span class="lang-cn">角色</span>
+                    </div>
+
+                    <div class="info-value">
+                        <strong class="lang-en">${p.role}</strong>
+                        <strong class="lang-cn">${p.roleCN || p.role}</strong>
+                        <div class="info-detail lang-en">${p.roleDetailEN || p.role}</div>
+                        <div class="info-detail lang-cn">${p.roleDetailCN || p.roleCN || p.role}</div>
+                    </div>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <div class="info-label">
+                        <span class="lang-en">TIMELINE</span>
+                        <span class="lang-cn">时间</span>
+                    </div>
+
+                    <div class="info-value">
+                        <strong class="lang-en">${p.timeline}</strong>
+                        <strong class="lang-cn">${p.timelineCN || p.timeline}</strong>
+                        <div class="info-detail lang-en">${p.timelineDetailEN || p.timeline}</div>
+                        <div class="info-detail lang-cn">${p.timelineDetailCN || p.timelineCN || p.timeline}</div>
+                    </div>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <div class="info-label">
+                        <span class="lang-en">TEAM</span>
+                        <span class="lang-cn">团队</span>
+                    </div>
+
+                    <div class="info-value">
+                        <strong class="lang-en">${p.team}</strong>
+                        <strong class="lang-cn">${p.teamCN || p.team}</strong>
+                        <div class="info-detail lang-en">${p.teamDetailEN || p.team}</div>
+                        <div class="info-detail lang-cn">${p.teamDetailCN || p.teamCN || p.team}</div>
+                    </div>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <div class="info-label">
+                        <span class="lang-en">IMPACT</span>
+                        <span class="lang-cn">影响 / 成果</span>
+                    </div>
+
+                    <div class="info-value">
+                        <strong class="lang-en">${p.impact}</strong>
+                        <strong class="lang-cn">${p.impactCN || p.impact}</strong>
+                        <div class="info-detail lang-en">${p.impactDetailEN || p.impact}</div>
+                        <div class="info-detail lang-cn">${p.impactDetailCN || p.impactCN || p.impact}</div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- MEDIA -->
+
+        <div class="media-section">
+
+            <div class="media-label">
+                <span class="lang-en">MEDIA / PRESS</span>
+                <span class="lang-cn">媒体 / 项目资料</span>
+            </div>
+
+
+            <a
+                class="media-link"
+                href="${p.mediaURL}"
+                target="_blank"
+            >
+
+                <div>
+
+                    <div class="media-title">
+                        <span class="lang-en">${p.mediaTitle}</span>
+                        <span class="lang-cn">${p.mediaTitleCN || '项目资料'}</span>
+                    </div>
+
+                    <div class="media-url">
+                        ${p.mediaURL}
+                    </div>
+
+                </div>
+
+                <div>
+                    ↗
+                </div>
+
+            </a>
+
+        </div>
+
+    `;
+
+
+    setupProjectVideos();
+
+    detail.classList.add(
+        "active"
+    );
+
+    detail.scrollTop = 0;
+
+    document.body.style.overflow =
+        "hidden";
+
+}
+
+
+function closeProject(){
+
+    detail.classList.remove(
+        "active"
+    );
+
+    document.body.style.overflow =
+        "";
+
+}
+
+
+document
+.getElementById("detailClose")
+.addEventListener(
+    "click",
+    closeProject
+);
+
+
+document.addEventListener(
+    "keydown",
+    e=>{
+
+        if(
+            e.key==="Escape"
+        ){
+
+            closeProject();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   SKILLS DRAG
+========================================================= */
+
+const skillsScroll =
+    document.getElementById(
+        "skillsScroll"
+    );
+
+let isDown = false;
+
+let startX = 0;
+let scrollLeft = 0;
+
+
+skillsScroll.addEventListener(
+    "mousedown",
+    e=>{
+
+        isDown = true;
+
+        skillsScroll.classList.add(
+            "dragging"
+        );
+
+        startX =
+            e.pageX
+            -
+            skillsScroll.offsetLeft;
+
+        scrollLeft =
+            skillsScroll.scrollLeft;
+
+    }
+);
+
+
+skillsScroll.addEventListener(
+    "mouseleave",
+    ()=>{
+
+        isDown=false;
+
+        skillsScroll.classList.remove(
+            "dragging"
+        );
+
+    }
+);
+
+
+skillsScroll.addEventListener(
+    "mouseup",
+    ()=>{
+
+        isDown=false;
+
+        skillsScroll.classList.remove(
+            "dragging"
+        );
+
+    }
+);
+
+
+skillsScroll.addEventListener(
+    "mousemove",
+    e=>{
+
+        if(!isDown)
+            return;
+
+        e.preventDefault();
+
+
+        const x =
+            e.pageX
+            -
+            skillsScroll.offsetLeft;
+
+
+        const walk =
+            (x-startX)*1.4;
+
+
+        skillsScroll.scrollLeft =
+            scrollLeft-walk;
+
+    }
+);
+
+
+/* =========================================================
+   SCROLL PROGRESS
+========================================================= */
+
+const scrollProgress =
+    document.createElement("div");
+
+scrollProgress.style.cssText = `
+    position:fixed;
+    top:0;
+    left:0;
+    width:0%;
+    height:2px;
+    z-index:999999;
+    background:linear-gradient(
+        90deg,
+        #8f70ff,
+        #c98ed8,
+        #f1a7d4
+    );
+    box-shadow:0 0 25px rgba(220,150,230,.6);
+`;
+
+document.body.appendChild(
+    scrollProgress
+);
+
+
+window.addEventListener(
+    "scroll",
+    ()=>{
+
+        const height =
+            document.documentElement.scrollHeight
+            -
+            window.innerHeight;
+
+        const percent =
+            height>0
+            ?
+            (
+                window.scrollY/height
+            )*100
+            :
+            0;
+
+
+        scrollProgress.style.width =
+            percent+"%";
+
+    }
+);
+
+</script>
+
+</body>
+</html>
